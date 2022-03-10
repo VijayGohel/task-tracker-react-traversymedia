@@ -1,6 +1,7 @@
-import Header from './components/header';
+import Header from './components/Header';
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
+import Footer from './components/Footer';
 import { useState } from 'react';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       reminder:true
     }
   ])
+  const [showAdd, setShowAdd] = useState(false);
 
   const deleteTask = (id)=>{
     setTasks(tasks.filter((task)=> task.id != id));
@@ -34,14 +36,15 @@ function App() {
   }
   return (
     <div className='container'>
-      <Header onClick={()=>console.log("Button clicked")}/>
+      <Header onClick={()=>setShowAdd(!showAdd)} showAdd={showAdd}/>
 
-      <AddTask onAdd={addTask}/>
+      {showAdd && <AddTask onAdd={addTask}/>}
       
       {tasks.length>0 ? 
           <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/> : 
           "No tasks to show"}
       
+      <Footer />
     </div>
   );
 }
